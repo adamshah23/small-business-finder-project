@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Small Businesses Finder</title>
+    <link rel = "stylesheet" href="{{ url_for('static', filename='style.css') }}" type = "text/css">
+</head>
+<body>
+    <h1> Here are some great suggestions for {{name}}! </h1>
+    <div class = "wrapper">
+        {% for output in alldata %}
+        <div class = "wrapper2">
+            <div class = "map">
+                <iframe
+                width="350"
+                height="350"
+                frameborder="0"
+                scrolling="no"
+                marginheight="0"
+                marginwidth="0"
+                src="https://maps.google.com/maps?q=  + {{output['lat']}} + {{output['long']}} + &hl=en&z=14&amp;output=embed">
+            </iframe>
+            </div>
+            <div class = "content">
+                <h2>{{output['bname']}}</h2>
+                <ul>
+                    <li><strong>Address: </strong>{{output['address']}}</li>
+                    <li><strong>Phone number: </strong>{{output['phonenum']}}</li>
+                    {% if 'rating' in output %}
+                    <li><strong>Rating: </strong>{{output['rating']}}</li>
+                    {%endif%}
+                    {% if 'pricelevel' in output %}
+                        <li><strong>Price level: </strong>{{output['pricelevel']}}</li>
+                    {%endif%}
+                    {% if 'open' in output %}
+                        {% if output['open'] == True %}
+                            <li><strong>Is it open now: </strong>Yes</li>
+                        {%else%}
+                            <li><strong>Is it open now: </strong>No</li>
+                        {%endif%}
+                    {%endif%}
+                    {% if 'website' in output %}
+                    <li><strong>Website url: </strong><a href = "{{output['website']}}">{{output['website']}}</a></li>
+                    {%endif%}
+                </ul>
+            </div>
+        </div>
+        {%endfor %}
+    </div>
+     <br />
+</body>
+</html>
